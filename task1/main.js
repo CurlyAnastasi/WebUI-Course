@@ -19,7 +19,7 @@ console.log('Task 2 result:', sortStr("4of Fo1r pe6ople g3ood th5e the2"));
 
 // Task 3
 
-function remainOfFootballers(cards) {
+function countFootballers(cards) {
     let teamA = 11;
     let teamB = 11;
     // remove all players with red cards
@@ -37,4 +37,4 @@ function remainOfFootballers(cards) {
     return `Task 3 result: [${teamA},${teamB}]`;
 }
 
-console.log(remainOfFootballers(["A4R", "A6R", "A8R", "A10R", "A11R"]));
+console.log(countFootballers(["A4R", "A6R", "A8R", "A10R", "A11R"]));
