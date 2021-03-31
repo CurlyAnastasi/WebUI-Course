@@ -50,9 +50,9 @@ function damagedOrSunk (board, attacks) {
 };
 
 let board = [[0,0,0,2,2,0],
-[0,3,0,0,0,0],
-[0,3,0,1,0,0],
-[0,3,0,1,0,0]];
+            [0,3,0,0,0,0],
+[            0,3,0,1,0,0],  
+            [0,3,0,1,0,0]];
 let attacks = [[2, 1], [1, 3], [4, 2]];
 
 console.log(damagedOrSunk(board, attacks));
