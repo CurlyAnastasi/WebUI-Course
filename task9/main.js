@@ -35,12 +35,3 @@ function countdown (millsecs) {
 // console.log(countdown(-154800000));
 // console.log(countdown(0));
 // console.log(countdown(61000));
-
-function getSolution (arr, sum) {
-    if (arr.length === 1) return arr[0] === sum;
-    return getSolution(arr.slice(1), sum - arr[0]) || getSolution(arr.slice(1), arr[0] - sum);
-};
-
-// console.log(getSolution([1,3,4,6,8],-2));
-// console.log(getSolution([15,2,3],10));
-// console.log(getSolution([1,5,3,2,5],-2));
