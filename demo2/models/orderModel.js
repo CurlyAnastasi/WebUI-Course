@@ -1,5 +1,6 @@
 const pool = require('./db');
 
+
 class OrderModel {
     insertUser = async (user) => {
         return await pool.query(`INSERT INTO users (name,phone,email) VALUES ('${user.name}','${user.phone}','${user.email}') RETURNING id;`)
@@ -15,34 +16,20 @@ class OrderModel {
         }
     };
 
-    addOrder = async (user,products) => {
-        let userID;
+    addOrder = async (user, products) => {
         let orderID;
 
-        // check is user in DB, return ID or add newUser if not
-        const isUser = await this.getUser(user).then(user => user.rows);
-        
-        if(isUser.length > 0) {
-            userID = isUser[0].id;
-        }
-        else {
-            userID = await this.insertUser(user).then(result => result.rows[0].id);
-        };
-        
         // add order and return order id
-        orderID =  await this.insertOrder(userID).then(order => order.rows[0].id);
+        orderID = await this.insertOrder(user.id).then(order => order.rows[0].id);
 
         // add products from order to products_items table
-        await this.insertOrderItems(products, orderID);
+        this.insertOrderItems(products, orderID);
 
         return orderID;
-        
     }
 
-    getUser = async (user) => {
-        const {phone} = user;
-        return await pool.query(`SELECT * FROM users WHERE phone = '${phone}';`);
-        
+    getUser = async (phone, password) => {
+        return await pool.query(`SELECT * FROM users WHERE phone = '${phone}' AND password = '${password}';`);
     };
 
     getProductsInfo = async (products) => {
@@ -53,24 +40,14 @@ class OrderModel {
         };
 
         return pool.query(query);
-        
+
     }
-
-    userValidation = async (user) => {
-        const { name, phone } = user;
-        // check that name is not empty and phone length equial 12
-        if (name.length == 0 || phone.length < 12) return false;
-        // check that name includes just letters
-        if(name.match(/[^A-Z]/ig)) return false;
-
-        return true;
-    };
-
+    
     productsValidation = async (products) => {
         for (let el of products) {
             // check that there are products with such id and amount
             const isProduct = await pool.query(`SELECT * FROM products WHERE id = '${el.id}' AND amount > ${el.count};`);
-            return (isProduct.rows.length !== 0) ? true : false;
+            return (isProduct.rows.length > 0) ? true : false;
         }
     }
 };
