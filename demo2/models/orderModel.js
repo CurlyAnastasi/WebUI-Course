@@ -17,10 +17,9 @@ class OrderModel {
     };
 
     addOrder = async (user, products) => {
-        let orderID;
 
         // add order and return order id
-        orderID = await this.insertOrder(user.id).then(order => order.rows[0].id);
+        const orderID = await this.insertOrder(user.id).then(order => order.rows[0].id);
 
         // add products from order to products_items table
         this.insertOrderItems(products, orderID);
@@ -29,7 +28,8 @@ class OrderModel {
     }
 
     getUser = async (phone, password) => {
-        return await pool.query(`SELECT * FROM users WHERE phone = '${phone}' AND password = '${password}';`);
+        const result = await pool.query(`SELECT * FROM users WHERE phone = '${phone}' AND password = '${password}';`);
+        return result.rows;
     };
 
     getProductsInfo = async (products) => {
