@@ -1,10 +1,11 @@
 const express = require('express');
 const productsRoutes = express.Router();
-const ProductsController = require('../controllers/productsController');
-const productsController = new ProductsController ();
+const productsController = require('../products/productsController');
+const validator = require('express-joi-validation').createValidator({});
+const paramsDto = require('../common/dto/paramsDto');
 
-productsRoutes.get('/',productsController.getAllProducts);
-productsRoutes.get('/search', productsController.search);
+productsRoutes.get('/', productsController.getAllProducts);
+productsRoutes.get('/search', validator.query(paramsDto), productsController.search);
 productsRoutes.get('/:id',productsController.getProduct);
 
 

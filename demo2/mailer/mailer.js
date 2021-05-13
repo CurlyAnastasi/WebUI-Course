@@ -21,8 +21,7 @@ class Mailer {
             totalPrice += el.amount * el.price;
         }
 
-        // `<b> Order_id:</b>${orderID}.<b> Product_id:</b>${el.id}.<b>Name:</b>${el.name}.<b> Amount:</b>${el.amount}.<b> Price:</b>${el.price}. <b>Price per item:</b>${el.amount * el.price}.`;
-        // totalPrice += el.amount * el.price;
+        
         let html = `
         <h1>A new order has been added to your store.</h1>
         <h3>Customer:</h3>
