@@ -1,7 +1,8 @@
+const msgHandler = require('../common/msgHandler');
 
 class OrderView {
     sendOkMsg = async (res) => {
-            res.send({status:'ok', data:[],message:'Data was sent successfully.'});
+            msgHandler(res);
         }
 };
 

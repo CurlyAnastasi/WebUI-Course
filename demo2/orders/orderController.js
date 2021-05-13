@@ -1,5 +1,5 @@
-const orderModel = require('../models/orderModel');
-const orderView = require('../views/orderView');
+const orderModel = require('./orderModel');
+const orderView = require('./orderView');
 const Mailer = require('../mailer/mailer');
 const NotFound = require('../common/errors/notFound');
 
@@ -10,7 +10,7 @@ class OrderController {
 
         // check that all products exist in DB
         const productsValid = await orderModel.productsValidation(products);
-        
+
         if (!productsValid) {
             return next(new NotFound(404, "There is not such products in DB"));
         }
@@ -18,12 +18,12 @@ class OrderController {
         // add order data to DB
         const orderID = await orderModel.addOrder(user,products);
         const productsInfo = await orderModel.getProductsInfo(products);
-        
+
         // display ok message
         orderView.sendOkMsg(res);
 
         // send letter 
-        Mailer.main(user, productsInfo.rows, orderID).catch(console.error);
+        Mailer.main(user, productsInfo, orderID).catch(console.error);
     
     }
 }
